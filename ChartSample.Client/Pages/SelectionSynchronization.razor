@@ -1,0 +1,120 @@
+﻿@page "/selection"
+@rendermode InteractiveAuto
+@using Syncfusion.Blazor.Charts;
+@using Syncfusion.Blazor
+@using System.Net.Http.Json
+@inject NavigationManager NavigationManager
+@inject HttpClient Http
+
+<div class="control-section">
+    <div class="row">
+        <div class="col">
+            <SfChart Title="USD to EUR" @ref="_chart1" Width="550" SelectionMode="SelectionMode.Point" SelectionPattern="SelectionPattern.Chessboard">
+                <ChartEvents OnSelectionChanged="Selection"></ChartEvents>
+                <ChartArea>
+                    <ChartTitleStyle TextAlignment="Alignment.Near"></ChartTitleStyle>
+                    <ChartAreaBorder Width="0"></ChartAreaBorder>
+                </ChartArea>
+                <ChartSelectedDataIndexes>
+                    <ChartSelectedDataIndex Series="@SelectedSeries" Point="@SelectedPoint">
+                    </ChartSelectedDataIndex>               
+                </ChartSelectedDataIndexes>
+                <ChartPrimaryXAxis ValueType ="Syncfusion.Blazor.Charts.ValueType.DateTime" Minimum="new DateTime(2023, 02, 19)" Maximum="new DateTime(2023, 03, 02)" LabelFormat="MMM d" IntervalType="IntervalType.Auto" LabelIntersectAction="LabelIntersectAction.Rotate45">
+                    <ChartAxisMajorGridLines Width="0"></ChartAxisMajorGridLines>
+                    <ChartAxisLineStyle Width="0"></ChartAxisLineStyle>
+                </ChartPrimaryXAxis>
+                <ChartPrimaryYAxis Minimum="0.86" Maximum="0.96" LabelFormat="n2" Interval="0.025">
+                    <ChartAxisMajorTickLines Width="0"></ChartAxisMajorTickLines>
+                    <ChartAxisLineStyle Width="0"></ChartAxisLineStyle>
+                </ChartPrimaryYAxis>
+                <ChartSeriesCollection>
+                    <ChartSeries DataSource="@ChartPoints" XName="USD" YName="EUR" Type="ChartSeriesType.Column">
+                        <ChartEmptyPointSettings Mode="EmptyPointMode.Drop"></ChartEmptyPointSettings>
+                    </ChartSeries>
+                </ChartSeriesCollection>
+            </SfChart>
+        </div>
+        <div class="col">
+            <SfChart Title="USD to JPY" @ref="_chart2" Width="550" SelectionMode="SelectionMode.Point" SelectionPattern="SelectionPattern.Chessboard">
+                <ChartEvents OnSelectionChanged="Selection"></ChartEvents>
+                <ChartArea>
+                    <ChartTitleStyle TextAlignment="Alignment.Near"></ChartTitleStyle>
+                    <ChartAreaBorder Width="0"></ChartAreaBorder>
+                </ChartArea>
+                <ChartSelectedDataIndexes>
+                    <ChartSelectedDataIndex Series="@SelectedSeries" Point="@SelectedPoint">
+                    </ChartSelectedDataIndex>
+                </ChartSelectedDataIndexes>
+                <ChartPrimaryXAxis ValueType="Syncfusion.Blazor.Charts.ValueType.DateTime" Minimum="new DateTime(2023, 02, 19)" Maximum="new DateTime(2023, 03, 02)" LabelFormat="MMM d" IntervalType="IntervalType.Auto" LabelIntersectAction="LabelIntersectAction.Rotate45">
+                    <ChartAxisMajorGridLines Width="0"></ChartAxisMajorGridLines>
+                    <ChartAxisLineStyle Width="0"></ChartAxisLineStyle>
+                </ChartPrimaryXAxis>
+                <ChartPrimaryYAxis Minimum="0.86" Maximum="0.96" LabelFormat="n2" Interval="0.025">
+                    <ChartAxisMajorTickLines Width="0"></ChartAxisMajorTickLines>
+                    <ChartAxisLineStyle Width="0"></ChartAxisLineStyle>
+                </ChartPrimaryYAxis>
+                <ChartSeriesCollection>
+                    <ChartSeries DataSource="@ChartPoints" XName="USD" YName="EUR" Type="ChartSeriesType.Column">
+                        <ChartEmptyPointSettings Mode="EmptyPointMode.Drop"></ChartEmptyPointSettings>
+                    </ChartSeries>
+                </ChartSeriesCollection>
+            </SfChart>
+        </div>
+    </div>
+</div>
+<style>
+    #control-container {
+        padding: 1px !important;
+    }
+
+    .row {
+        display: flex;
+    }
+
+    .col {
+        width: 50%;
+        margin: 10px;
+        height: 270px;
+    }
+</style>
+@code {
+    SfChart? _chart1;
+    SfChart? _chart2;
+    public int SelectedSeries = -1;
+    public int SelectedPoint = -1;
+    public CurrencyRates[] ChartPoints { get; set; } = new CurrencyRates[] { };
+    List<ToolbarItems> toolbarItems = new List<ToolbarItems>() { ToolbarItems.Pan, ToolbarItems.Reset };
+
+    protected override async Task OnInitializedAsync()
+    {
+        ChartPoints = await Http.GetFromJsonAsync<CurrencyRates[]>(NavigationManager.BaseUri + "synchronized-data.json");
+    }
+
+    public class CurrencyRates
+    {
+        public DateTime USD { get; set; }
+        public double EUR { get; set; }
+        public double JPY { get; set; }
+        public double SGD { get; set; }
+        public double INR { get; set; }
+    }
+
+    public void Selection(SelectionCompleteEventArgs args)
+    {
+        var selectedValues = args?.SelectedDataValues;
+        if (selectedValues?.Count > 0)
+        {
+            var firstSelectedValue = selectedValues[0];
+            var seriesIndex = firstSelectedValue.SeriesIndex ?? -1;
+            var pointIndex = firstSelectedValue.PointIndex ?? -1;
+
+            if (SelectedSeries != seriesIndex || SelectedPoint != pointIndex)
+            {
+                SelectedSeries = seriesIndex;
+                SelectedPoint = pointIndex;
+                InvokeAsync(StateHasChanged);
+            }
+        }
+
+    }
+}
