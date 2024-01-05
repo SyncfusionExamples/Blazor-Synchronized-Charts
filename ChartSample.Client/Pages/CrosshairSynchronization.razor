@@ -1,0 +1,119 @@
+﻿@page "/crosshair"
+@rendermode InteractiveAuto
+@using Syncfusion.Blazor.Charts;
+@using Syncfusion.Blazor
+@using System.Net.Http.Json
+@inject NavigationManager NavigationManager
+@inject HttpClient Http
+
+<div class="control-section">
+    <div class="row">
+        <div class="col" @onmouseleave="OnMouseLeaveChart1">
+            <SfChart Title="USD to EUR" @ref="_chart1" Width="550">
+                <ChartEvents ChartMouseMove="OnMouseEventChart1" ChartMouseUp="OnMouseLeaveChart1"></ChartEvents>
+                <ChartArea>
+                    <ChartTitleStyle TextAlignment="Alignment.Near"></ChartTitleStyle>
+                    <ChartAreaBorder Width="0"></ChartAreaBorder>
+                </ChartArea>
+                <ChartPrimaryXAxis ValueType="Syncfusion.Blazor.Charts.ValueType.DateTime" Minimum="new DateTime(2023, 02, 18)" Maximum="new DateTime(2023, 08, 18)" LabelFormat="MMM d" IntervalType="IntervalType.Months" LabelIntersectAction="LabelIntersectAction.Hide">
+                    <ChartAxisMajorGridLines Width="0"></ChartAxisMajorGridLines>
+                    <ChartAxisLineStyle Width="0"></ChartAxisLineStyle>
+                </ChartPrimaryXAxis>
+                <ChartPrimaryYAxis Minimum="0.86" Maximum="0.96" LabelFormat="n2" Interval="0.025">
+                    <ChartAxisMajorTickLines Width="0"></ChartAxisMajorTickLines>
+                    <ChartAxisLineStyle Width="0"></ChartAxisLineStyle>
+                </ChartPrimaryYAxis>
+                <ChartSeriesCollection>
+                    <ChartSeries DataSource="@ChartPoints" XName="USD" YName="EUR" Type="ChartSeriesType.Line" Width="2">
+                        <ChartEmptyPointSettings Mode="EmptyPointMode.Drop"></ChartEmptyPointSettings>
+                    </ChartSeries>
+                </ChartSeriesCollection>
+                <ChartCrosshairSettings Enable="true" DashArray="2,2" LineType="LineType.Vertical"></ChartCrosshairSettings>
+            </SfChart>
+        </div>
+        <div class="col" @onmouseleave="OnMouseLeaveChart2">
+            <SfChart Title="USD to JPY" @ref="_chart2" Width="550">
+                <ChartEvents ChartMouseMove="OnMouseEventChart2" ChartMouseUp="OnMouseLeaveChart2"></ChartEvents>
+                <ChartArea>
+                    <ChartTitleStyle TextAlignment="Alignment.Near"></ChartTitleStyle>
+                    <ChartAreaBorder Width="0"></ChartAreaBorder>
+                </ChartArea>
+                <ChartPrimaryXAxis ValueType="Syncfusion.Blazor.Charts.ValueType.DateTime" Minimum="new DateTime(2023, 02, 18)" Maximum="new DateTime(2023, 08, 18)" LabelFormat="MMM d" IntervalType="IntervalType.Months" LabelIntersectAction="LabelIntersectAction.Hide">
+                    <ChartAxisMajorGridLines Width="0"></ChartAxisMajorGridLines>
+                    <ChartAxisLineStyle Width="0"></ChartAxisLineStyle>
+                </ChartPrimaryXAxis>
+                <ChartPrimaryYAxis Minimum="0.86" Maximum="0.96" LabelFormat="n2" Interval="0.025">
+                    <ChartAxisMajorTickLines Width="0"></ChartAxisMajorTickLines>
+                    <ChartAxisLineStyle Width="0"></ChartAxisLineStyle>
+                </ChartPrimaryYAxis>
+                <ChartSeriesCollection>
+                    <ChartSeries DataSource="@ChartPoints" XName="USD" YName="EUR" Type="ChartSeriesType.Line" Width="2">
+                        <ChartEmptyPointSettings Mode="EmptyPointMode.Drop"></ChartEmptyPointSettings>
+                    </ChartSeries>
+                </ChartSeriesCollection>
+                <ChartCrosshairSettings Enable="true" DashArray="2,2" LineType="LineType.Vertical"></ChartCrosshairSettings>
+            </SfChart>
+        </div>
+    </div>
+</div>
+<style>
+    #control-container {
+        padding: 1px !important;
+    }
+
+    .row {
+        display: flex;
+    }
+
+    .col {
+        width: 50%;
+        margin: 10px;
+        height: 270px;
+    }
+</style>
+@code {
+    SfChart? _chart1;
+    SfChart? _chart2;
+    public CurrencyRates[] ChartPoints { get; set; } = new CurrencyRates[] { };
+
+    protected override async Task OnInitializedAsync()
+    {
+        ChartPoints = await Http.GetFromJsonAsync<CurrencyRates[]>(NavigationManager.BaseUri + "synchronized-data.json");
+    }
+
+    public class CurrencyRates
+    {
+        public DateTime USD { get; set; }
+        public double EUR { get; set; }
+        public double JPY { get; set; }
+        public double SGD { get; set; }
+        public double INR { get; set; }
+    }
+
+    public void OnMouseEventChart1(ChartMouseEventArgs args)
+    {
+        _chart2.ShowCrosshair(args.MouseX, args.MouseY);
+    }
+    public void OnMouseEventChart2(ChartMouseEventArgs args)
+    {
+        _chart1.ShowCrosshair(args.MouseX, args.MouseY);
+    }
+
+    public void OnMouseLeaveChart1()
+    {
+        _chart2.HideCrosshair();
+    }
+    public void OnMouseLeaveChart2()
+    {
+        _chart1.HideCrosshair();
+    }
+
+    public void OnMouseLeaveChart1(ChartMouseEventArgs args)
+    {
+        _chart2.HideCrosshair();
+    }
+    public void OnMouseLeaveChart2(ChartMouseEventArgs args)
+    {
+        _chart1.HideCrosshair();
+    }
+}
