@@ -1,65 +1,54 @@
 
-# Blazor-Synchronized-Charts
+# Blazor Synchronized Charts
 
-This repository contains a Blazor application built with .NET 8, focusing on synchronized charts. Follow the steps below to set up and run the application.
+A Blazor application demonstrating synchronized chart interactions using [Blazor Chart](https://www.syncfusion.com/blazor-components/blazor-charts) component. This project showcases how to synchronize crosshair, tooltip, selection, and zoom behaviors across multiple charts.
+
+## Overview
+
+This sample demonstrates synchronized interactions in  Blazor Charts component. When you interact with one chart (hover, select, zoom), the same interaction is mirrored across all synchronized charts.
+
+## Features
+
+* **Crosshair**  - Synchronizes crosshair position across charts when hovering 
+* **Tooltip** - Shows synchronized tooltips on all charts simultaneously 
+* **Selection**- Synchronizes point selection across charts 
+* **Zooming** - Synchronizes zoom level and pan position across charts 
 
 ## Prerequisites
 
-Make sure you have the following tools installed on your machine:
-
-- [.NET SDK 8.0](https://dotnet.microsoft.com/download/dotnet/5.0)
-- [Visual Studio](https://visualstudio.microsoft.com/) or [Visual Studio Code](https://code.visualstudio.com/) (optional but recommended)
+- [.NET SDK 8.0](https://dotnet.microsoft.com/download/dotnet/8.0) or later
+- [Visual Studio 2022](https://visualstudio.microsoft.com/) or later
+- [VS Code](https://code.visualstudio.com/)
 
 ## Getting Started
 
-1. Clone the repository:
+### Clone the repository:
 
-    ```bash
-    git clone https://github.com/SyncfusionExamples/Blazor-Synchronized-Charts.git
-    ```
+```bash
+git clone https://github.com/SyncfusionExamples/Blazor-Synchronized-Charts.git
+cd Blazor-Synchronized-Charts
+```
 
-2. Navigate to the project directory:
+### Run with Visual Studio
 
-    ```bash
-    cd Blazor-Synchronized-Charts
-    ```
+1. Open the solution file using Visual Studio 2022 or later.
+2. Restore the NuGet packages by rebuilding the solution.
+3. Build the project to ensure there are no compilation errors.
+4. Run the project.
 
-3. Restore the project dependencies:
+### Run with .NET CLI
 
-    ```bash
-    dotnet restore
-    ```
+```bash
+# Restore dependencies
+dotnet restore
 
-## Running the Application
+# Run the project
+dotnet run
+```
 
-### Visual Studio
+## References
 
-1. Open the solution file (`ChartSample.sln`) in Visual Studio.
-
-2. Set the startup project to the Blazor application project.
-
-3. Press `F5` or click on the "Start Debugging" button to run the application.
-
-### Visual Studio Code
-
-1. Open the project in Visual Studio Code:
-
-    ```bash
-    code .
-    ```
-
-2. Open a new terminal in Visual Studio Code and run the following command to build and run the application:
-
-    ```bash
-    dotnet run
-    ```
-
-3. Open your browser and navigate to [https://localhost:5001](https://localhost:5001).
-
-## Additional Information
-
-- Customize the application based on your synchronized charts requirements and explore additional Blazor features and components.
-
-## Contributing
-
-If you find issues or have suggestions, feel free to open a [GitHub issue](https://github.com/SyncfusionExamples/Blazor-Synchronized-Charts/issues) or create a pull request.
+- https://blazor.syncfusion.com/documentation/chart/cross-hair-and-track-ball
+- https://blazor.syncfusion.com/documentation/chart/selection
+- https://blazor.syncfusion.com/documentation/chart/zooming
+- https://blazor.syncfusion.com/documentation/chart/tool-tip
