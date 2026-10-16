@@ -67,9 +67,7 @@ This sample demonstrates synchronized chart interactions using the Syncfusion [B
 
 3. Open your browser and navigate to [https://localhost:5001](https://localhost:5001).
 
-## Project Structure
 
-- `ChartSample/Pages/` — contains the synchronized chart implementation and chart interaction logic.
 
 ## Support and Feedback
 
