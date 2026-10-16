@@ -1,14 +1,25 @@
 
 # Blazor-Synchronized-Charts
 
-This repository contains a Blazor application built with .NET 8, focusing on synchronized charts. Follow the steps below to set up and run the application.
+## Overview
+
+This sample demonstrates synchronized chart interactions using the Syncfusion [Blazor Chart](https://www.syncfusion.com/blazor-components/blazor-charts) component in a .NET 8 Blazor application. The implementation focuses on coordinating user interactions across multiple chart instances so that actions performed on one chart are reflected in related charts. Synchronized charts help users compare datasets more effectively by keeping visual interactions aligned across multiple views of connected information.
+
+## Key Features
+
+- Demonstrates synchronized chart behavior across multiple chart instances.
+- Uses Syncfusion Chart interaction APIs to coordinate user actions between charts.
+- Supports synchronized tooltip behavior across related charts.
+- Supports synchronized crosshair interactions for comparative data analysis.
+- Demonstrates synchronized chart navigation and viewing experience.
+- Provides a practical implementation pattern for displaying correlated datasets using multiple charts.
+- Shows how chart interaction events can be used to update other charts dynamically.
+- Built using a Blazor Web App architecture targeting .NET 8.
 
 ## Prerequisites
 
-Make sure you have the following tools installed on your machine:
-
-- [.NET SDK 8.0](https://dotnet.microsoft.com/download/dotnet/5.0)
-- [Visual Studio](https://visualstudio.microsoft.com/) or [Visual Studio Code](https://code.visualstudio.com/) (optional but recommended)
+- Visual Studio 2022 or Visual Studio Code
+- .NET SDK compatible with the project's target framework
 
 ## Getting Started
 
@@ -56,10 +67,14 @@ Make sure you have the following tools installed on your machine:
 
 3. Open your browser and navigate to [https://localhost:5001](https://localhost:5001).
 
-## Additional Information
 
-- Customize the application based on your synchronized charts requirements and explore additional Blazor features and components.
 
-## Contributing
+## Support and Feedback
 
-If you find issues or have suggestions, feel free to open a [GitHub issue](https://github.com/SyncfusionExamples/Blazor-Synchronized-Charts/issues) or create a pull request.
+- For general product questions, visit the [Syncfusion Community Forum](https://www.syncfusion.com/forums) or [Syncfusion Support](https://www.syncfusion.com/support).
+- To report an issue specific to this sample, open a GitHub issue in this repository.
+- For synchronized chart documentation, visit https://help.syncfusion.com/chart-sdk/blazor/charts/how-to/synchronized-chart
+
+## License
+
+This is a Syncfusion sample project provided to demonstrate product usage. Review the [Syncfusion license terms](https://www.syncfusion.com/sales/pricing?category=ui-components) before using Syncfusion components in your own applications.
